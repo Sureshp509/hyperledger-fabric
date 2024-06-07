@@ -1,0 +1,66 @@
+version: '2'
+
+networks:
+  test:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+
+services:
+  orderer.example.com:
+    image: hyperledger/fabric-orderer:2.5
+    container_name: orderer.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    ports:
+      - 7050:7050
+    networks:
+      - test
+    volumes:
+      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/:/var/hyperledger/orderer/tls
+
+  peer0.org1.example.com:
+    image: hyperledger/fabric-peer:2.5
+    container_name: peer0.org1.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 7051:7051
+    networks:
+      - test
+    volumes:
+      - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.org1.example.com:/var/hyperledger/production
+
+  peer0.org2.example.com:
+    image: hyperledger/fabric-peer:2.5
+    container_name: peer0.org2.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    ports:
+      - 9051:9051
+    networks:
+      - test
+    volumes:
+      - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls:/etc/hyperledger/fabric/tls
+      - peer0.org2.example.com:/var/hyperledger/production
+
+  cli:
+    image: hyperledger/fabric-tools:2.5
+    container_name: cli
+    tty: true
+    networks:
+      - test
+    depends_on:
+      - orderer.example.com
+      - peer0.org1.example.com
+      - peer0.org2.example.com
+    volumes:
+      - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+      - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
