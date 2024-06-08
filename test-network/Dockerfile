@@ -1,18 +1,21 @@
-# Use a base image with Docker installed
-FROM docker:20.10.7
+# Use the official Node.js image as the base image
+FROM node:20.10.0
 
-# Install necessary packages
-RUN apk add --no-cache git bash curl
+# Install necessary dependencies for Hyperledger Fabric
+# RUN apt-get update && apt-get install -y \
+#     curl \
+#     gnupg \
+#     && curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.0
 
-# Install Docker Compose
-RUN curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
-    && chmod +x /usr/local/bin/docker-compose
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /test-network
 
-# Copy the fabric samples to the container
+# Copy the contents of the local directory to the working directory in the container
 COPY . .
 
+# Grant execution permissions for the network script
+RUN chmod +x network.sh
+
 # Start the Fabric network
-CMD ["bash", "-c", "./network.sh up createChannel -ca"]
+CMD ["bash", "-c", "./network.sh up"]
