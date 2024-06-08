@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: fabric-network
+    env: docker
+    plan: free
+    repo: https://github.com/Sureshp509/hyperledger-fabric
+    buildCommand: cd test-network && docker build -t fabric-network .
+    startCommand: docker run -it fabric-network
