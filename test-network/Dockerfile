@@ -15,7 +15,7 @@ WORKDIR /test-network
 COPY . .
 
 # Grant execution permissions for the network script
-# RUN chmod +x ./network.sh
+RUN chmod +x network.sh
 
 # Start the Fabric network
 CMD ["bash", "-c", "./network.sh up"]
