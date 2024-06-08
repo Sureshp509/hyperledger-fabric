@@ -6,4 +6,5 @@ services:
     repo: https://github.com/Sureshp509/hyperledger-fabric
     branch: master
     buildCommand: docker build -t fabric-network .
-    startCommand: docker run -it fabric-network
+    startCommand: docker run -p 3000:3000 -e PORT=3000 -it fabric-network
+    port: 3000  # Specify the port here
