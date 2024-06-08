@@ -2,10 +2,10 @@
 FROM node:20.10.0
 
 # Install necessary dependencies for Hyperledger Fabric
-# RUN apt-get update && apt-get install -y \
-#     curl \
-#     gnupg \
-#     && curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.0
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    && curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.0
 
 
 # Set the working directory inside the container
@@ -15,7 +15,7 @@ WORKDIR /test-network
 COPY . .
 
 # Grant execution permissions for the network script
-# RUN chmod +x ./network.sh
+RUN chmod +x ./network.sh
 
 # Start the Fabric network
 CMD ["bash", "-c", "network.sh up"]
