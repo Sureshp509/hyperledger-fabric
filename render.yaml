@@ -6,6 +6,6 @@ services:
     repo: https://github.com/Sureshp509/hyperledger-fabric
     branch: master  # Specify your branch here
     dockerfilePath: test-network/Dockerfile  # Specify the path to your Dockerfile
-    buildCommand: docker build -t fabric-network .
-    startCommand: docker run -p 3000:3000 -e PORT=3000 -it fabric-network
+    buildCommand: docker build -t hyperledger-fabric-1 .
+    startCommand: docker run -p 3000:3000 -e PORT=3000 -it hyperledger-fabric-1
     port: 3000  # Specify the port here
