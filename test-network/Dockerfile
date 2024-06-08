@@ -18,4 +18,4 @@ COPY . .
 # RUN chmod +x ./network.sh
 
 # Start the Fabric network
-CMD ["bash", "-c", "./network.sh up"]
+CMD ["bash", "-c", "network.sh up"]
