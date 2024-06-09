@@ -13,8 +13,8 @@ app.use(bodyParser.json());
 app.use(cors());
 async function main() {
     // Connect to Fabric network
-    const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-   // const ccpPath = path.resolve(__dirname,  'connection.json');
+   // const ccpPath = path.resolve(__dirname, '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+   const ccpPath = path.resolve(__dirname,  'connection.json');
 
     const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
     const ccp = JSON.parse(ccpJSON);
