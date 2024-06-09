@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 # Use the official Node.js image as the base image
 FROM node:20.10.0
 
@@ -21,4 +20,3 @@ RUN chmod +x network.sh
 
 # Start the Fabric network
 CMD ["bash", "-c", "./network.sh up"]
->>>>>>> 629c7292d5f3a829eabeff0c35be0034b291a03a
